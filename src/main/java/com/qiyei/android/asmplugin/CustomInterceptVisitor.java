@@ -1,15 +1,13 @@
 package com.qiyei.android.asmplugin;
 
 
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.*;
 
-public class LogVisitor extends ClassVisitor {
+public class CustomInterceptVisitor extends ClassVisitor {
     private String mClassName;
 
-    public LogVisitor(ClassVisitor classVisitor) {
-        super(Opcodes.ASM5, classVisitor);
+    public CustomInterceptVisitor(ClassVisitor classVisitor) {
+        super(Opcodes.ASM7, classVisitor);
     }
 
     @Override
@@ -39,6 +37,16 @@ public class LogVisitor extends ClassVisitor {
             }
         }
         return mv;
+    }
+
+    @Override
+    public AnnotationVisitor visitTypeAnnotation(int typeRef, TypePath typePath, String descriptor, boolean visible) {
+        return super.visitTypeAnnotation(typeRef, typePath, descriptor, visible);
+    }
+
+    @Override
+    public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
+        return super.visitAnnotation(descriptor, visible);
     }
 
     //访问结束
